@@ -211,17 +211,24 @@ public:
 
                 GLint dataType = GL_UNSIGNED_BYTE;
                 GLint dataFormat = GL_RGBA;
+                int bpp = 4;
 
                 if (m_frame.pixelFormat() == QVideoFrame::Format_RGB565) {
                     dataType = GL_UNSIGNED_SHORT_5_6_5;
                     dataFormat = GL_RGB;
+                    bpp = 2;
                 }
 
                 functions->glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, m_textureId);
+
+                glPixelStorei(GL_UNPACK_ROW_LENGTH, m_frame.bytesPerLine() / bpp);
+                
                 glTexImage2D(GL_TEXTURE_2D, 0, dataFormat,
                              m_textureSize.width(), m_textureSize.height(),
                              0, dataFormat, dataType, m_frame.bits());
+
+                glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

@@ -159,6 +159,14 @@ void QDeclarativeVideoRendererBackend::updateGeometry()
                                          rect.width() / contentWidth);
         }
     }
+
+    if (m_surface->surfaceFormat().scanLineDirection() == QVideoSurfaceFormat::BottomToTop)
+    {
+        float top = m_sourceTextureRect.top();
+        float bottom = m_sourceTextureRect.bottom();
+        m_sourceTextureRect.setTop(bottom);
+        m_sourceTextureRect.setBottom(top);
+    }
 }
 
 QSGNode *QDeclarativeVideoRendererBackend::updatePaintNode(QSGNode *oldNode,

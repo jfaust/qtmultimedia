@@ -48,7 +48,9 @@
 #include <gst/gst.h>
 #include <glib.h>
 
-#include <gst/interfaces/colorbalance.h>
+#ifdef HAVE_GST_PHOTOGRAPHY
+#include <gst/interfaces/photography.h>
+#endif
 
 QT_BEGIN_NAMESPACE
 

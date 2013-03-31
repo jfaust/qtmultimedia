@@ -222,13 +222,13 @@ public:
                 functions->glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, m_textureId);
 
-                glPixelStorei(GL_UNPACK_ROW_LENGTH, m_frame.bytesPerLine() / bpp);
+                glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, m_frame.bytesPerLine() / bpp);
                 
                 glTexImage2D(GL_TEXTURE_2D, 0, dataFormat,
                              m_textureSize.width(), m_textureSize.height(),
                              0, dataFormat, dataType, m_frame.bits());
 
-                glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+                glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, 0);
 
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

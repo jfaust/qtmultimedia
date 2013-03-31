@@ -253,15 +253,15 @@ void QSGVideoMaterial_YUV420::bind()
 
 
             functions->glActiveTexture(GL_TEXTURE1);
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, bpl2);
+            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, bpl2);
             bindTexture(m_textureIds[1], fw/2, fh / 2, bits + offsetU);
             functions->glActiveTexture(GL_TEXTURE2);
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, bpl2);
+            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, bpl2);
             bindTexture(m_textureIds[2], fw/2, fh / 2, bits + offsetV);
             functions->glActiveTexture(GL_TEXTURE0); // Finish with 0 as default texture unit
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, bpl);
+            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, bpl);
             bindTexture(m_textureIds[0], fw, fh, bits);
-            glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, 0);
 
             m_frame.unmap();
         }

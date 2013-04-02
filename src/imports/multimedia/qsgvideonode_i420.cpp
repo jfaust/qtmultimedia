@@ -251,17 +251,22 @@ void QSGVideoMaterial_YUV420::bind()
             if (m_frame.pixelFormat() == QVideoFrame::Format_YV12)
                 qSwap(offsetU, offsetV);
 
+            #ifdef GL_EXT_unpack_subimage
+            const GLenum unpackRowLength = GL_UNPACK_ROW_LENGTH_EXT;
+            #else
+            const GLenum unpackRowLength = GL_UNPACK_ROW_LENGTH;
+            #endif
 
             functions->glActiveTexture(GL_TEXTURE1);
-            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, bpl2);
+            glPixelStorei(unpackRowLength, bpl2);
             bindTexture(m_textureIds[1], fw/2, fh / 2, bits + offsetU);
             functions->glActiveTexture(GL_TEXTURE2);
-            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, bpl2);
+            glPixelStorei(unpackRowLength, bpl2);
             bindTexture(m_textureIds[2], fw/2, fh / 2, bits + offsetV);
             functions->glActiveTexture(GL_TEXTURE0); // Finish with 0 as default texture unit
-            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, bpl);
+            glPixelStorei(unpackRowLength, bpl);
             bindTexture(m_textureIds[0], fw, fh, bits);
-            glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT, 0);
+            glPixelStorei(unpackRowLength, 0);
 
             m_frame.unmap();
         }
